@@ -45,7 +45,7 @@ const RegisterPage = () => {
     if (!isLoaded) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-pulse text-blue-600">Loading...</div>
+                <div className="animate-pulse text-blue-600">Memuat...</div>
             </div>
         );
     }
@@ -54,12 +54,12 @@ const RegisterPage = () => {
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-                    Create your account
+                    Buat akun baru
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
-                    Or{' '}
+                    Atau{' '}
                     <Link to="/login" className="font-medium text-blue-700 hover:text-blue-500">
-                        sign in to your existing account
+                        masuk ke akun yang sudah ada
                     </Link>
                 </p>
             </div>
@@ -76,7 +76,7 @@ const RegisterPage = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
                                 <label htmlFor="first-name" className="block text-sm font-medium text-gray-700">
-                                    First name
+                                    Nama Depan
                                 </label>
                                 <div className="mt-1">
                                     <input
@@ -93,7 +93,7 @@ const RegisterPage = () => {
 
                             <div>
                                 <label htmlFor="last-name" className="block text-sm font-medium text-gray-700">
-                                    Last name
+                                    Nama Belakang
                                 </label>
                                 <div className="mt-1">
                                     <input
@@ -111,7 +111,7 @@ const RegisterPage = () => {
 
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email address
+                                Email
                             </label>
                             <div className="mt-1">
                                 <input
@@ -144,7 +144,7 @@ const RegisterPage = () => {
                                 />
                             </div>
                             <p className="mt-1 text-xs text-gray-500">
-                                Use 8+ characters with a mix of letters, numbers & symbols
+                                Paswoord harus terdiri dari minimal 8 karakter.
                             </p>
                         </div>
 
@@ -157,7 +157,7 @@ const RegisterPage = () => {
                                         : 'bg-blue-600 hover:bg-blue-700'
                                     } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                             >
-                                {isLoading ? 'Creating account...' : 'Create account'}
+                                {isLoading ? 'Membuat akun...' : 'Buat akun'}
                             </button>
                         </div>
                     </form>
@@ -168,7 +168,7 @@ const RegisterPage = () => {
                                 <div className="w-full border-t border-gray-300"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                                <span className="px-2 bg-white text-gray-500">Atau lanjut dengan</span>
                             </div>
                         </div>
 

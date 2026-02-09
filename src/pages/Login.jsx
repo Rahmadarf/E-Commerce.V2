@@ -40,7 +40,7 @@ const LoginPage = () => {
     if (!isLoaded) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-pulse text-blue-600">Loading...</div>
+                <div className="animate-pulse text-blue-600">Memuat...</div>
             </div>
         );
     }
@@ -50,12 +50,12 @@ const LoginPage = () => {
         <div className="min-h-screen  bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
-                    Sign in to your account
+                    Masuk ke akun Anda
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600">
-                    Or{' '}
+                    Atau{' '}
                     <Link to="/signup" className="font-medium text-blue-700 hover:text-blue-500">
-                        create a new account
+                        buat akun baru
                     </Link>
                 </p>
             </div>
@@ -77,7 +77,7 @@ const LoginPage = () => {
                     <form className="space-y-6" onSubmit={handleEmailLogin}>
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                                Email address
+                                Email atau Username
                             </label>
                             <div className="mt-1">
                                 <input
@@ -119,13 +119,13 @@ const LoginPage = () => {
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                    Remember me
+                                    Ingat Saya
                                 </label>
                             </div>
 
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-blue-700 hover:text-blue-500">
-                                    Forgot your password?
+                                    Lupa Password?
                                 </a>
                             </div>
                         </div>
@@ -139,7 +139,7 @@ const LoginPage = () => {
                                     : 'bg-blue-600 hover:bg-blue-700'
                                     } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                             >
-                                {isLoading ? 'Signing in...' : 'Sign in'}
+                                {isLoading ? 'Masuk ke akun...' : 'Masuk'}
                             </button>
                         </div>
                     </form>
@@ -150,7 +150,7 @@ const LoginPage = () => {
                                 <div className="w-full border-t border-gray-300"></div>
                             </div>
                             <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                                <span className="px-2 bg-white text-gray-500">Atau lanjut dengan</span>
                             </div>
                         </div>
 
