@@ -42,7 +42,7 @@ const LoginPage = () => {
                     strategy: 'email_code'
                 })
 
-                navigate('/verify-email');
+                navigate('/verify-login');
                 return;
             }
 

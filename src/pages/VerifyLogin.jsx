@@ -1,10 +1,10 @@
 // VerifyEmail.js
-import { useSignUp } from '@clerk/clerk-react';
+import { useSignIn } from '@clerk/clerk-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const VerifyEmail = () => {
-    const { signUp, isLoaded } = useSignUp();
+const VerifyLogin = () => {
+    const { signIn, isLoaded } = useSignIn();
     const navigate = useNavigate();
     const [code, setCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ const VerifyEmail = () => {
         setError('');
 
         try {
-            const result = await signUp.attemptEmailAddressVerification({
+            const result = await signIn.attemptSecondFactor({
                 code,
             });
 
@@ -106,4 +106,4 @@ const VerifyEmail = () => {
     );
 };
 
-export default VerifyEmail;
+export default VerifyLogin;
