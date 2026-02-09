@@ -22,40 +22,12 @@ const LoginPage = () => {
         setError('');
 
         try {
-            const result = await signIn.create({
+            await signIn.create({
                 identifier: email,
-                password,
+                strategy: 'email_code'
             });
 
-            if (result.status === 'complete') {
-                await setActive({ session: result.createdSessionId });
-                setSuccessMessage('Berhasil login, mengalihkan ke halaman utama...');
-                await new Promise((resolve) => setTimeout(resolve, 1500));
-                navigate('/', { replace: true });
-                return;
-            }
-
-            if (result.status === 'needs_second_factor') {
-                const emailFactor = result.supportedSecondFactors.find(
-                    f => f.strategy === 'email_code'
-                );
-
-                if (!emailFactor) {
-                    setError('Email verification is not available.');
-                    return;
-                }
-
-                await signIn.prepareSecondFactor({ strategy: 'email_code', factorId: emailFactor.id });
-
-                localStorage.setItem('clerkSignInId', result.id);
-                localStorage.setItem('clerkFactorId', emailFactor.id);
-
-                navigate('/verify-login', { replace: true });
-                return;
-            }
-
-            console.error('Unhandled sign-in state:', result);
-
+            navigate('/verify-login');
         } catch (err) {
             console.error(err);
             setError(err.errors?.[0]?.message || 'Login gagal');

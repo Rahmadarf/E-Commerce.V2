@@ -9,6 +9,7 @@ const VerifyLogin = () => {
     const [code, setCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleVerify = async (e) => {
         e.preventDefault();
@@ -18,26 +19,18 @@ const VerifyLogin = () => {
         setError('');
 
         try {
-            const factorId = localStorage.getItem('clerkFactorId');
-            const signInId = localStorage.getItem('clerkSignInId');
-
-            if (!factorId || !signInId) {
-                setError('Sesi verifikasi tidak valid. Silakan coba login kembali.');
-                return;
-            }
-
-            const result = await signIn.attemptSecondFactor({
+            const result = await signIn.attemptFirstFactor({
+                strategy: 'email_code',
                 code,
-                factorId,
             });
 
             await setActive({ session: result.createdSessionId });
 
-            localStorage.clear();
-            navigate('/'); // Redirect after verification
+            setSuccess('Verifikasi berhasil! Mengalihkan...');
+            navigate('/');
 
         } catch (err) {
-            setError(err.errors[0]?.message || 'Invalid verification code');
+            setError(err.errors[0]?.message || 'Kode Salah');
         } finally {
             setIsLoading(false);
         }
@@ -67,6 +60,12 @@ const VerifyLogin = () => {
                     {error && (
                         <div className="mb-4 bg-red-50 text-red-700 p-3 rounded-lg text-sm">
                             {error}
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="mb-4 bg-green-50 text-green-700 p-3 rounded-lg text-sm">
+                            {success}
                         </div>
                     )}
 
