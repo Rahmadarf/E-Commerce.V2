@@ -38,7 +38,7 @@ const LoginPage = () => {
             }
 
             if (result.status === 'needs_second_factor') {
-                await signIn.authenticateWithRedirect({
+                await signIn.prepareSecondFactor({
                     strategy: 'email_code'
                 })
 
