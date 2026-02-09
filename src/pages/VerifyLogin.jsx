@@ -18,14 +18,24 @@ const VerifyLogin = () => {
         setError('');
 
         try {
+            const factorId = localStorage.getItem('clerkFactorId');
+            const signInId = localStorage.getItem('clerkSignInId');
+
+            if (!factorId || !signInId) {
+                setError('Sesi verifikasi tidak valid. Silakan coba login kembali.');
+                return;
+            }
+
             const result = await signIn.attemptSecondFactor({
                 code,
+                factorId,
             });
 
-            if (result.status === 'complete') {
-                await setActive({ session: result.createdSessionId });
-                navigate('/'); // Redirect after verification
-            }
+            await setActive({ session: result.createdSessionId });
+
+            localStorage.clear();
+            navigate('/'); // Redirect after verification
+
         } catch (err) {
             setError(err.errors[0]?.message || 'Invalid verification code');
         } finally {

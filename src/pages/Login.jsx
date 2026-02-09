@@ -36,9 +36,19 @@ const LoginPage = () => {
             }
 
             if (result.status === 'needs_second_factor') {
-                await signIn.prepareSecondFactor({
-                    strategy: 'email_code',
-                });
+                const emailFactor = result.supportedSecondFactors.find(
+                    f => f.strategy === 'email_code'
+                );
+
+                if (!emailFactor) {
+                    setError('Email verification is not available.');
+                    return;
+                }
+
+                await signIn.prepareSecondFactor({ strategy: 'email_code' });
+
+                localStorage.setItem('clerkSignInId', result.id);
+                localStorage.setItem('clerkFactorId', emailFactor.id);
 
                 navigate('/verify-login', { replace: true });
                 return;
