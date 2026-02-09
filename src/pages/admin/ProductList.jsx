@@ -12,7 +12,7 @@ const AdminProductList = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
-        axios.get('https://rahmadarifin.my.id/E-Commerce/api/produk/list.php')
+        axios.get('https://rahmadarifin.my.id/api/produk/list.php')
             .then(res => {
                 setProducts(res.data);
             })

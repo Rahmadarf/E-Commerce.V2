@@ -11,7 +11,7 @@ function Home() {
     const { isLoaded } = useUser();
 
     useEffect(() => {
-        axios.get('https://rahmadarifin.my.id/E-Commerce/api/produk/list.php')
+        axios.get('https://rahmadarifin.my.id/api/produk/list.php')
             .then(res => {
                 console.log(res.data);
                 setProducts(res.data);
