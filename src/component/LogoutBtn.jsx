@@ -14,7 +14,7 @@ const LogoutButton = () => {
     };
 
     return (
-        <Tooltip title="Log out" placement="left" arrow>
+        <Tooltip title="Log out" placement="bottom" arrow>
             <button
                 onClick={handleLogout}
                 className="fixed top-4 right-4 flex items-center justify-center w-10 h-10 rounded-full bg-white border border-blue-200 text-gray-700 hover:bg-blue-50 hover:text-blue-700 shadow-sm transition-all duration-200 group"

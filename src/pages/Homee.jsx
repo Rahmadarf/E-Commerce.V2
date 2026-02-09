@@ -41,7 +41,7 @@ function Home() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center">
                         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                            Selamat datang di <span className="text-blue-700">EseaShop</span>
+                            Selamat datang di <span className="text-blue-700">EzShop</span>
                         </h1>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                             Temukan produk-produk menakjubkan dengan harga yang tidak biasa. Gratis ongkir untuk pesanan di atas Rp. 5.000,00!

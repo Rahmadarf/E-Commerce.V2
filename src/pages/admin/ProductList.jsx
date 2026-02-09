@@ -26,7 +26,7 @@ const AdminProductList = () => {
             {/* Header */}
             <div className="px-6 py-4 border-b border-blue-100 justify-between flex items-center">
                 <h2 className="text-xl font-bold text-gray-900">Product Management</h2>
-                <Tooltip title="Add New Product" placement='left' arrow>
+                <Tooltip title="Add a New Product" placement='left' arrow>
                     <Plus className="h-6 w-6 text-blue-600 mt-2 cursor-pointer" onClick={() => setShowAddModal(true)} />
                 </Tooltip>
             </div>
