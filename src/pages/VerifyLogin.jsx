@@ -92,9 +92,15 @@ const VerifyLogin = () => {
                         </div>
                     </form>
 
-                    <div className="mt-4 text-center">
+                    <div className="mt-4 text-center justify-between flex">
                         <button
-                            onClick={() => signUp.prepareEmailAddressVerification({ strategy: 'email_code' })}
+                            onClick={() => { navigate('/login'); }}
+                            className="text-sm text-blue-700 hover:text-blue-500"
+                        >
+                            Back to login page
+                        </button>
+                        <button
+                            onClick={() => signIn.prepareSecondFactor({ strategy: 'email_code' })}
                             className="text-sm text-blue-700 hover:text-blue-500"
                         >
                             Resend verification code
