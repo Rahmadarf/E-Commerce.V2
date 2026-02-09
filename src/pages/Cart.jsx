@@ -22,7 +22,7 @@ const Cart = () => {
         const clerkId = user?.id
 
 
-        axios.get(`https://rahmadarifin.my.id/E-Commerce/api/carts/list.php?clerk_id=user_39EX5U8xOzpwYkPd6lH362ueySW`)
+        axios.get(`https://rahmadarifin.my.id/E-Commerce/api/cart/list.php?clerk_id=user_39EX5U8xOzpwYkPd6lH362ueySW`)
             .then(res => {
                 console.log(res.data);
                 setCart(res.data);
