@@ -27,7 +27,9 @@ const VerifyLogin = () => {
             await setActive({ session: result.createdSessionId });
 
             setSuccess('Verifikasi berhasil! Mengalihkan...');
-            navigate('/');
+            new Promise((resolve) => setTimeout(resolve, 1500)).then(() => {
+                navigate('/');
+            });
 
         } catch (err) {
             setError(err.errors[0]?.message || 'Kode Salah');
