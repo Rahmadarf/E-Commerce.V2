@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const VerifyLogin = () => {
-    const { signIn, isLoaded } = useSignIn();
+    const { signIn, isLoaded, setActive } = useSignIn();
     const navigate = useNavigate();
     const [code, setCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -23,7 +23,8 @@ const VerifyLogin = () => {
             });
 
             if (result.status === 'complete') {
-                navigate('/onboarding'); // Redirect after verification
+                await setActive({ session: result.createdSessionId });
+                navigate('/'); // Redirect after verification
             }
         } catch (err) {
             setError(err.errors[0]?.message || 'Invalid verification code');
