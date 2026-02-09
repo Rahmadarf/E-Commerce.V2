@@ -38,6 +38,10 @@ const LoginPage = () => {
             }
 
             if (result.status === 'needs_second_factor') {
+                await signIn.authenticateWithRedirect({
+                    strategy: 'email_code'
+                })
+
                 navigate('/verify-email');
                 return;
             }
