@@ -29,30 +29,31 @@ const LoginPage = () => {
 
             if (result.status === 'complete') {
                 await setActive({ session: result.createdSessionId });
-                setSuccessMessage('Login successful! Redirecting...');
-                await
-                    new Promise((resolve) => setTimeout(resolve, 1500));
+                setSuccessMessage('Berhasil login, mengalihkan ke halaman utama...');
+                await new Promise((resolve) => setTimeout(resolve, 1500));
                 navigate('/', { replace: true });
-            } else {
-                console.error('Unexpected state:', result);
+                return;
             }
 
             if (result.status === 'needs_second_factor') {
                 await signIn.prepareSecondFactor({
-                    strategy: 'email_code'
-                })
+                    strategy: 'email_code',
+                });
 
-                navigate('/verify-login');
+                navigate('/verify-login', { replace: true });
                 return;
             }
 
+            console.error('Unhandled sign-in state:', result);
+
         } catch (err) {
-            console.error('Error:', err.errors[0]?.message);
-            setError(err.errors[0]?.message || 'An error occurred during login');
+            console.error(err);
+            setError(err.errors?.[0]?.message || 'Login gagal');
         } finally {
             setIsLoading(false);
         }
     };
+
 
     if (!isLoaded) {
         return (
