@@ -45,7 +45,7 @@ const LoginPage = () => {
                     return;
                 }
 
-                await signIn.prepareSecondFactor({ strategy: 'email_code' });
+                await signIn.prepareSecondFactor({ strategy: 'email_code', factorId: emailFactor.id });
 
                 localStorage.setItem('clerkSignInId', result.id);
                 localStorage.setItem('clerkFactorId', emailFactor.id);
