@@ -31,11 +31,17 @@ const LoginPage = () => {
                 await setActive({ session: result.createdSessionId });
                 setSuccessMessage('Login successful! Redirecting...');
                 await
-                new Promise((resolve) => setTimeout(resolve, 1500));
+                    new Promise((resolve) => setTimeout(resolve, 1500));
                 navigate('/', { replace: true });
             } else {
                 console.error('Unexpected state:', result);
             }
+
+            if (result.status === 'needs_second_factor') {
+                navigate('/verify-email');
+                return;
+            }
+
         } catch (err) {
             console.error('Error:', err.errors[0]?.message);
             setError(err.errors[0]?.message || 'An error occurred during login');
