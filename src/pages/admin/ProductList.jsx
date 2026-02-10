@@ -1,15 +1,18 @@
 // AdminProductList.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { Delete, Plus } from 'lucide-react';
 import Tooltip from '@mui/material/Tooltip';
 import AddProductModal from '../../component/AddProduct';
 import DeleteProductModal from '../../component/DeleteProduct';
+import { NotfyContext } from '../../context/Notfy';
+import ProductAddedNotification from '../../component/Notif';
 
-const AdminProductList = () => {
+const AdminProductList = ({ onShowNotification }) => {
     const [products, setProducts] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const { notification } = useContext(NotfyContext)
 
     useEffect(() => {
         axios.get('https://rahmadarifin.my.id/api/produk/list.php')
@@ -109,7 +112,12 @@ const AdminProductList = () => {
                 <p className="text-gray-600">Get started by adding your first product.</p>
             </div>
             <DeleteProductModal isOpen={showDeleteModal} onCancel={() => setShowDeleteModal(false)} />
-            <AddProductModal isOpen={showAddModal} onCancel={() => setShowAddModal(false)} />
+
+            <AddProductModal isOpen={showAddModal} onCancel={() => setShowAddModal(false)} onAdd={onShowNotification} />
+
+            {notification && (
+                <ProductAddedNotification />
+            )}
         </div>
 
     );

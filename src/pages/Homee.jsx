@@ -4,11 +4,13 @@ import Navbar from "../component/Navbar";
 import { Link } from "react-router-dom";
 import Footer from "../component/Footer";
 import { useUser } from "@clerk/clerk-react";
+import Notfy from "../context/Notfy";
 
 function Home() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const { isLoaded } = useUser();
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         axios.get('https://rahmadarifin.my.id/api/produk/list.php')
@@ -84,7 +86,7 @@ function Home() {
                                             currency: 'IDR',
                                             minimumFractionDigits: 2
                                         }).format(produk.price - (produk.price * (produk.discount / 100)))}</span>
-                                        <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors">
+                                        <button onClick={() => setShow(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors">
                                             Add to Cart
                                         </button>
                                     </div>
@@ -100,7 +102,11 @@ function Home() {
             {/* Promo Banner */}
 
 
-            {/* Footer */}
+            <Notfy 
+            show={show}
+            message={'Berhasil menambahkan ke keranjang!'}
+            type="success"
+            />
         </div>
     );
 }

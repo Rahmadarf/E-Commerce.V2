@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { NotfyContext } from '../context/Notfy';
+const AddProductModal = ({ onCancel, isOpen, onConfirm, onAdd }) => {
 
-const AddProductModal = ({ onCancel, isOpen, onConfirm }) => {
+    const { showNotification } = useContext(NotfyContext);
+
+    const handleAddProduct = () => {
+        // Logic to add product goes here
+        // After adding the product successfully, show notification
+        showNotification("Product added successfully!", "success");
+    }
 
     if (!isOpen) return null;
 
@@ -103,13 +111,15 @@ const AddProductModal = ({ onCancel, isOpen, onConfirm }) => {
                             className="flex-1 py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium"
                             onClick={onCancel}
                         >
-                            Cancel
+                            Batal
                         </button>
                         <button
+                            onClick={handleAddProduct}
                             className="flex-1 py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium"
                         >
-                            Add Product
+                            Tambah Produk
                         </button>
+
                     </div>
 
                 </div>
