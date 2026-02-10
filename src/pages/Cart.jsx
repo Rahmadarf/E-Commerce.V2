@@ -24,7 +24,6 @@ const Cart = () => {
 
         axios.get(`https://rahmadarifin.my.id/api/cart/list.php?clerk_id=${clerkId}`)
             .then(res => {
-                console.log(res.data);
                 setCart(res.data);
             })
             .finally(() => setLoading(false))

@@ -27,7 +27,6 @@ const ProductsPage = () => {
     useEffect(() => {
         axios.get('https://rahmadarifin.my.id/api/produk/list.php')
             .then(res => {
-                console.log(res.data);
                 setProducts(res.data);
                 setLoading(false);
 
