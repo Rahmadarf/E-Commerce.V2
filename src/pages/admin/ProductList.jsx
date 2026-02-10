@@ -55,7 +55,7 @@ const AdminProductList = ({ onShowNotification }) => {
                             <tr key={index} className="hover:bg-blue-50">
                                 <td className="px-6 py-4">
                                     <img
-                                        src={product.product_image}
+                                        src={`https://rahmadarifin.my.id/uploads/image/${product.product_image}`}
                                         alt={product.name}
                                         className="w-12 h-12 object-contain rounded border border-blue-100"
                                     />

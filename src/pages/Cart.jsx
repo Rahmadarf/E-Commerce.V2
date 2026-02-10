@@ -64,7 +64,7 @@ const Cart = () => {
                                             {/* Product Image */}
                                             <div className="shrink-0">
                                                 <img
-                                                    src={item.product_image}
+                                                    src={`https://rahmadarifin.my.id/uploads/image/${item.product_image}`}
                                                     alt={item.name}
                                                     className="w-24 h-24 object-contain"
                                                 />
