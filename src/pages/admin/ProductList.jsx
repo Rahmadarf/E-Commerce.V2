@@ -1,10 +1,11 @@
 // AdminProductList.js
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Delete, Plus } from 'lucide-react';
+import { Delete, Edit, Plus } from 'lucide-react';
 import Tooltip from '@mui/material/Tooltip';
 import AddProductModal from '../../component/AddProduct';
 import DeleteProductModal from '../../component/DeleteProduct';
+import EditProduct from '../../component/EditProduct';
 import { NotfyContext } from '../../context/Notfy';
 import ProductAddedNotification from '../../component/Notif';
 
@@ -12,6 +13,9 @@ const AdminProductList = ({ onShowNotification }) => {
     const [products, setProducts] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [editingProductId, setEditingProductId] = useState(null);
     const { notification } = useContext(NotfyContext)
 
     useEffect(() => {
@@ -91,7 +95,12 @@ const AdminProductList = ({ onShowNotification }) => {
                                 </td>
                                 <td className="px-6 py-4 text-sm">
                                     <div className="flex space-x-3">
-                                        <button className="text-blue-600 hover:text-blue-900 font-medium">
+                                        <button
+                                        onClick={() => {
+                                            setEditingProductId(product.id);
+                                            setShowEditModal(true);
+                                        }}
+                                        className="text-blue-600 hover:text-blue-900 font-medium">
                                             Edit
                                         </button>
                                         <button onClick={() => setShowDeleteModal(true)} className="text-red-600 hover:text-red-900 font-medium">
@@ -114,6 +123,8 @@ const AdminProductList = ({ onShowNotification }) => {
             <DeleteProductModal isOpen={showDeleteModal} onCancel={() => setShowDeleteModal(false)} />
 
             <AddProductModal isOpen={showAddModal} onCancel={() => setShowAddModal(false)} onAdd={onShowNotification} />
+
+            <EditProduct isOpen={showEditModal} onClose={() => setShowEditModal(false)} productId={editingProductId} onSuccess={onShowNotification} />
 
             {notification && (
                 <ProductAddedNotification />

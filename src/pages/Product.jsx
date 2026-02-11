@@ -17,12 +17,12 @@ const ProductsPage = () => {
 
     // Mock data (replace with API call)
     const categories = [
-        { id: 'all', name: 'All Categories' },
-        { id: 'electronics', name: 'Electronics' },
-        { id: 'clothing', name: 'Clothing' },
-        { id: 'home', name: 'Home & Kitchen' },
-        { id: 'accessories', name: 'Accessories' },
-        { id: 'beauty', name: 'Beauty' }
+        { id: 'all', name: 'Semua Kategori' },
+        { id: 'electronics', name: 'Elektronik' },
+        { id: 'clothing', name: 'Pakaian' },
+        { id: 'home', name: 'Rumah & Dapur' },
+        { id: 'accessories', name: 'Aksesori' },
+        { id: 'beauty', name: 'Kecantikan' }
     ];
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const ProductsPage = () => {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-pulse text-blue-600">Loading...</div>
+                <div className="animate-pulse text-blue-600">Memuat...</div>
             </div>
         )
     }
@@ -46,7 +46,7 @@ const ProductsPage = () => {
     if (!isLoaded) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
-                <div className="animate-pulse text-blue-600">Loading...</div>
+                <div className="animate-pulse text-blue-600">Memuat...</div>
             </div>
         );
     }
@@ -95,11 +95,11 @@ const ProductsPage = () => {
                     {/* Filters Sidebar */}
                     <div className="w-full lg:w-64 shrink-0">
                         <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-5 sticky top-6">
-                            <h2 className="font-bold text-gray-900 mb-4">Filters</h2>
+                            <h2 className="font-bold text-gray-900 mb-4">Filter</h2>
 
                             {/* Category Filter */}
                             <div className="mb-6">
-                                <h3 className="font-medium text-gray-900 mb-2">Categories</h3>
+                                <h3 className="font-medium text-gray-900 mb-2">Kategori</h3>
                                 <ul className="space-y-2">
                                     {categories.map(category => (
                                         <li key={category.id}>
@@ -121,14 +121,14 @@ const ProductsPage = () => {
                             {/* Price Range */}
                             <div className="mb-6">
                                 <h3 className="font-medium text-gray-900 mb-2">
-                                    Price: {new Intl.NumberFormat('id-ID', {
+                                    Harga: {new Intl.NumberFormat('id-ID', {
                                         style: 'currency',
                                         currency: 'IDR',
-                                        minimumFractionDigits: 2
+                                        minimumFractionDigits: 0
                                     }).format(priceRange[0])} - {new Intl.NumberFormat('id-ID', {
                                         style: 'currency',
                                         currency: 'IDR',
-                                        minimumFractionDigits: 2
+                                        minimumFractionDigits: 0
                                     }).format(priceRange[1])}
                                 </h3>
                                 <div className="space-y-2">
@@ -156,7 +156,7 @@ const ProductsPage = () => {
                                         onChange={(e) => setInStockOnly(e.target.checked)}
                                         className="text-blue-600 rounded focus:ring-blue-500"
                                     />
-                                    <span className="ml-2 text-gray-700">In Stock Only</span>
+                                    <span className="ml-2 text-gray-700">Hanya yang stok</span>
                                 </label>
                             </div>
 
@@ -180,7 +180,7 @@ const ProductsPage = () => {
                         {/* Sort Controls */}
                         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                             <div className="text-gray-700">
-                                Showing <span className="font-medium">{sortedProducts.length}</span> products
+                                Menampilkan <span className="font-medium">{sortedProducts.length}</span> produk
                             </div>
                             <div className="flex items-center">
                                 <span className="mr-2 text-gray-700">Sort by:</span>
@@ -215,8 +215,8 @@ const ProductsPage = () => {
                                                     currency: 'IDR',
                                                     minimumFractionDigits: 2
                                                 }).format(produk.price - (produk.price * (produk.discount / 100)))}</span>
-                                                <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors">
-                                                    Add to Cart
+                                                <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 max-w-35 rounded text-sm transition-colors">
+                                                    Tambah ke Keranjang
                                                 </button>
                                             </div>
                                         </div>
@@ -226,9 +226,9 @@ const ProductsPage = () => {
                         ) : (
                             <div className="bg-white rounded-xl border border-blue-100 p-12 text-center">
                                 <div className="text-blue-800 text-5xl mb-4">🛒</div>
-                                <h3 className="text-xl font-medium text-gray-900 mb-2">No products found</h3>
+                                <h3 className="text-xl font-medium text-gray-900 mb-2">Produk tidak ditemukan</h3>
                                 <p className="text-gray-600 mb-4">
-                                    Try adjusting your filters to see more products
+                                    Coba sesuaikan filter Anda atau hapus beberapa untuk melihat lebih banyak produk.
                                 </p>
                                 <button
                                     onClick={() => {
