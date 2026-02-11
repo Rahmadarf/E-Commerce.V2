@@ -7,7 +7,7 @@ import { useUser } from '@clerk/clerk-react';
 
 const ProductsPage = () => {
     // Filter states
-    const [priceRange, setPriceRange] = useState([0, 100000]);
+    const [priceRange, setPriceRange] = useState([0, 1000000]);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [inStockOnly, setInStockOnly] = useState(false);
     const [sortBy, setSortBy] = useState('featured');
@@ -135,7 +135,7 @@ const ProductsPage = () => {
                                     <input
                                         type="range"
                                         min="0"
-                                        max="100000"
+                                        max="1000000"
                                         value={priceRange[1]}
                                         onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                                         className="w-full accent-blue-600"

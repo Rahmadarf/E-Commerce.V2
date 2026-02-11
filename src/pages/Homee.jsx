@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import Notfy from "../context/Notfy";
+import { User } from "lucide-react";
+import { NotfyContext } from "../context/Notfy";
+import React from "react";
+import ProductAddedNotification from "../component/Notif";
 
 function Home() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const { isLoaded } = useUser();
-    const [show, setShow] = useState(false);
+    const { user } = useUser();
+    const { showNotification } = useContext(NotfyContext)
 
     useEffect(() => {
         axios.get('https://rahmadarifin.my.id/api/produk/list.php')
@@ -20,17 +25,30 @@ function Home() {
     }, [isLoaded]);
 
 
-    // if (loading) {
-    //     return <p className="text-center mt-10">Loading...</p>;
-    // }
+    const addToCart = async (productId) => {
 
-    // if (!isLoaded) {
-    //     return (
-    //         <div className="min-h-screen flex items-center justify-center bg-gray-50">
-    //             <div className="animate-pulse text-blue-600">Loading...</div>
-    //         </div>
-    //     );
-    // }
+        try {
+            const formData = new FormData();
+            formData.append("clerk_id", user.id);
+            formData.append("product_id", productId);
+
+            const res = await axios.post(
+                "https://rahmadarifin.my.id/api/cart/addToCart.php",
+                formData
+            );  
+
+            if (res.data.success) {
+                showNotification("Produk berhasil ditambahkan ke keranjang!", "success");
+            } else {
+                showNotification("Gagal menambahkan produk ke keranjang.", "error");
+            }
+
+        } catch (err) {
+            console.error(err);
+            showNotification("Terjadi kesalahan!", "error");
+        }
+    };
+
 
 
     return (
@@ -83,7 +101,7 @@ function Home() {
                                             currency: 'IDR',
                                             minimumFractionDigits: 2
                                         }).format(produk.price - (produk.price * (produk.discount / 100)))}</span>
-                                        <button onClick={() => setShow(true)} className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors">
+                                        <button onClick={() => addToCart(produk.id)} className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm transition-colors">
                                             Add to Cart
                                         </button>
                                     </div>
@@ -98,12 +116,7 @@ function Home() {
 
             {/* Promo Banner */}
 
-
-            <Notfy 
-            show={show}
-            message={'Berhasil menambahkan ke keranjang!'}
-            type="success"
-            />
+            {showNotification && <ProductAddedNotification />}
         </div>
     );
 }

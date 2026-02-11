@@ -1,25 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Tooltip from '@mui/material/Tooltip';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
+import axios from 'axios';
 
 const Navbar = () => {
 
     const [Opened, Open] = useState(false);
     const { user, isLoaded } = useUser();
+    const [cartCount, setCartCount] = useState(0);
+    const clerkId = user?.id
 
 
     const initials =
         (user?.firstName?.charAt(0) || '') +
         (user?.lastName?.charAt(0) || '');
 
+
+    const fetchCartCount = async () => {
+        if (!clerkId) return;
+
+        try {
+            const res = await axios.get(
+                `https://rahmadarifin.my.id/api/cart/count.php?clerk_id=${clerkId}`
+            );
+            setCartCount(res.data.count || 0);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    useEffect(() => {
+        if (isLoaded) {
+            fetchCartCount();
+        }
+    }, [clerkId, isLoaded]);
+
+
     return (
         <header className="bg-white shadow-sm sticky top-0 z-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    { user && <div className="flex items-center">
+                    {user && <div className="flex items-center">
                         <div className="shrink-0 flex items-center">
                             <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
                                 <span className="text-blue-800 font-bold text-lg">
@@ -71,7 +95,7 @@ const Navbar = () => {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                 </svg>
                                 <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                                    3
+                                    {cartCount}
                                 </span>
                             </Link>
                         </Tooltip>
