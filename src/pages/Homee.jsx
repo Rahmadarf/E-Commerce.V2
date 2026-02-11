@@ -116,7 +116,7 @@ function Home() {
 
             {/* Promo Banner */}
 
-            {showNotification && <ProductAddedNotification />}
+            
         </div>
     );
 }
