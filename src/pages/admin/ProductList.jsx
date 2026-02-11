@@ -9,22 +9,28 @@ import EditProduct from '../../component/EditProduct';
 import { NotfyContext } from '../../context/Notfy';
 import ProductAddedNotification from '../../component/Notif';
 
-const AdminProductList = ({ onShowNotification }) => {
+const AdminProductList = ({ showNotification }) => {
     const [products, setProducts] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     const [showEditModal, setShowEditModal] = useState(false);
     const [editingProductId, setEditingProductId] = useState(null);
+    const [deleteId, setDeleteId] = useState(null);
     const { notification } = useContext(NotfyContext)
 
     useEffect(() => {
+        fetchProducts();
+    }, []);
+
+    const fetchProducts = () => {
         axios.get('https://rahmadarifin.my.id/api/produk/list.php')
             .then(res => {
                 setProducts(res.data);
             })
             .catch(err => console.error(err));
-    })
+    };
+
 
 
 
@@ -56,11 +62,11 @@ const AdminProductList = ({ onShowNotification }) => {
 
                     <tbody className="divide-y divide-blue-100">
                         {products.map((product, index) => (
-                            <tr key={index} className="hover:bg-blue-50">
+                            <tr key={product.id} className="hover:bg-blue-50">
                                 <td className="px-6 py-4">
                                     <img
                                         src={`https://rahmadarifin.my.id/uploads/image/${product.product_image}`}
-                                        alt={product.name}
+                                        alt={product.product_name}
                                         className="w-12 h-12 object-contain rounded border border-blue-100"
                                     />
                                 </td>
@@ -96,14 +102,14 @@ const AdminProductList = ({ onShowNotification }) => {
                                 <td className="px-6 py-4 text-sm">
                                     <div className="flex space-x-3">
                                         <button
-                                        onClick={() => {
-                                            setEditingProductId(product.id);
-                                            setShowEditModal(true);
-                                        }}
-                                        className="text-blue-600 hover:text-blue-900 font-medium">
+                                            onClick={() => {
+                                                setEditingProductId(product.id);
+                                                setShowEditModal(true);
+                                            }}
+                                            className="text-blue-600 hover:text-blue-900 font-medium">
                                             Edit
                                         </button>
-                                        <button onClick={() => setShowDeleteModal(true)} className="text-red-600 hover:text-red-900 font-medium">
+                                        <button onClick={() => {setDeleteId(product.id); setShowDeleteModal(true)}} className="text-red-600 hover:text-red-900 font-medium">
                                             Delete
                                         </button>
                                     </div>
@@ -120,11 +126,11 @@ const AdminProductList = ({ onShowNotification }) => {
                 <h3 className="text-lg font-medium text-gray-900 mb-2">No products found</h3>
                 <p className="text-gray-600">Get started by adding your first product.</p>
             </div>
-            <DeleteProductModal isOpen={showDeleteModal} onCancel={() => setShowDeleteModal(false)} />
+            <DeleteProductModal isOpen={showDeleteModal} onCancel={() => setShowDeleteModal(false)} productId={deleteId} onSuccess={fetchProducts}/>
 
-            <AddProductModal isOpen={showAddModal} onCancel={() => setShowAddModal(false)} onAdd={onShowNotification} />
+            <AddProductModal isOpen={showAddModal} onCancel={() => setShowAddModal(false)} onAdd={fetchProducts}/>
 
-            <EditProduct isOpen={showEditModal} onClose={() => setShowEditModal(false)} productId={editingProductId} onSuccess={onShowNotification} />
+            <EditProduct isOpen={showEditModal} onClose={() => setShowEditModal(false)} productId={editingProductId} onSuccess={fetchProducts} />
 
             {notification && (
                 <ProductAddedNotification />

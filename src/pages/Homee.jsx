@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../component/Navbar";
 import { Link } from "react-router-dom";
-import Footer from "../component/Footer";
 import { useUser } from "@clerk/clerk-react";
 import Notfy from "../context/Notfy";
 
@@ -73,7 +71,7 @@ function Home() {
                         {products.map((produk) => (
                             <div key={produk.id} className="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden hover:shadow-md transition-shadow">
                                 <div className="aspect-square bg-blue-50 flex items-center justify-center p-4">
-                                    <img src={`https://rahmadarifin.my.id/uploads/image/${produk.product_image}`} alt={produk.product_name} />
+                                    <img src={produk.product_image ? `https://rahmadarifin.my.id/uploads/image/${produk.product_image}` : 'https://rahmadarifin.my.id/uploads/image/NoImage.png'} alt={produk.product_name} />
                                 </div>
 
                                 <div className="p-4">

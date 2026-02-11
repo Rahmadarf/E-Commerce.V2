@@ -1,20 +1,23 @@
 // EditProduct.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
+import { NotfyContext } from "../context/Notfy";
 
 const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
     const [form, setForm] = useState({
         id: "",
-        nama: "",
-        harga: "",
-        diskon: "",
-        stok: "",
-        kategori: "",
-        gambar: "",
+        product_name: "",
+        price: "",
+        discount: "",
+        stock: "",
+        categorie: "",
+        product_image: "",
     });
+
 
     const [gambarBaru, setGambarBaru] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { showNotification } = useContext(NotfyContext);
 
     // ambil data produk
     useEffect(() => {
@@ -23,10 +26,22 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
         axios
             .get(`https://rahmadarifin.my.id/api/produk/detail.php?id=${productId}`)
             .then((res) => {
-                setForm(res.data.data);
+                const p = res.data.data;
+
+                setForm({
+                    id: p.id,
+                    product_name: p.product_name,
+                    price: p.price,
+                    discount: p.discount,
+                    stock: p.stock,
+                    categorie: p.categorie,
+                    product_image: p.product_image,
+                });
+
                 setGambarBaru(null);
             });
     }, [productId, isOpen]);
+
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -51,10 +66,14 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
 
-            onSuccess(); // refresh data
+            showNotification("Produk berhasil diupdate", "success");
+            onSuccess?.(); // refresh data
             onClose();
         } catch (err) {
-            alert("Gagal update produk");
+            showNotification("Gagal mengupdate produk", "error");
+            console.error("ERROR AXIOS:", err);
+            console.log("RESPONSE:", err.response);
+
         } finally {
             setLoading(false);
         }
@@ -85,7 +104,7 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
                             Nama Produk *
                         </label>
                         <input
-                            name="nama"
+                            name="product_name"
                             value={form.product_name}
                             onChange={handleChange}
                             placeholder="Masukkan nama produk"
@@ -114,7 +133,7 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
                             Diskon (%)
                         </label>
                         <input
-                            name="diskon"
+                            name="discount"
                             type="number"
                             min="0"
                             max="100"
@@ -131,7 +150,7 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
                             Stok *
                         </label>
                         <input
-                            name="stok"
+                            name="stock"
                             type="number"
                             min="0"
                             value={form.stock}
@@ -147,7 +166,7 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
                             Kategori *
                         </label>
                         <select
-                            name="kategori"
+                            name="categorie"
                             value={form.categorie}
                             onChange={handleChange}
                             className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"

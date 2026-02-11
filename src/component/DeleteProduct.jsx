@@ -1,9 +1,36 @@
 // LogoutAlert.js
 import React from 'react';
 import { Trash } from 'lucide-react';
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { NotfyContext } from '../context/Notfy';
 
-const LogoutAlert = ({ isOpen, onConfirm, onCancel }) => {
+const LogoutAlert = ({ isOpen, onSuccess, onCancel, productId }) => {
     if (!isOpen) return null;
+
+    const [loading, setLoading] = useState(false);
+    const { showNotification } = useContext(NotfyContext);
+
+    const handleDelete = async () => {
+        setLoading(true);
+
+        const fd = new FormData();
+        fd.append('id', productId);
+        
+        try {
+            await axios.post('https://rahmadarifin.my.id/api/produk/delete.php', 
+                fd);
+
+                showNotification("Produk berhasil dihapus", "success");
+                onSuccess?.();
+                onCancel();
+        } catch (error) {
+            showNotification("Gagal menghapus produk", "error");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -34,10 +61,11 @@ const LogoutAlert = ({ isOpen, onConfirm, onCancel }) => {
                         Batal
                     </button>
                     <button
-                        onClick={onConfirm}
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                        onClick={handleDelete}
+                        disabled={loading}
+                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
                     >
-                        Hapus
+                        {loading ? 'Menghapus...' : 'Hapus'}
                     </button>
                 </div>
             </div>
