@@ -6,6 +6,8 @@ import { BadgeCheckIcon, Ban } from 'lucide-react';
 const ProductAddedNotification = () => {
     const { notification } = useContext(NotfyContext);
 
+    if (!notification) return null;
+
     return (
         <div className="fixed top-4 right-4 z-50 max-w-60 w-full">
             <div className="bg-white rounded-lg shadow-lg border border-blue-100 overflow-hidden animate-fade-in-up">

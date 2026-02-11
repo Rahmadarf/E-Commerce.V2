@@ -20,13 +20,14 @@ import AdminHeader from './pages/admin/component/AdminHeader.jsx'
 import AdminLayout from './layout/AdminLayout.jsx'
 import AdminProductsList from './pages/admin/ProductList.jsx'
 import VerifyLogin from './pages/VerifyLogin.jsx'
+import LoggedGuard from './protect/LoggedGuard.jsx'
 
 
 function App() {
   return (
     <Routes>
       {/* PUBLIC ROUTES*/}
-      <Route element={<BlankLayout />}>
+      <Route element={<LoggedGuard><BlankLayout /></LoggedGuard>}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />

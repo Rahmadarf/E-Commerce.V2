@@ -13,7 +13,7 @@ const AdminPageBtn = () => {
         <Tooltip title="Admin Dashboard" placement="bottom" arrow>
             <button
                 onClick={() => navigate('/admin')}
-                className="fixed z-50 bottom-4 right-4 flex items-center justify-center w-10 h-10 rounded-full bg-white border border-blue-200 text-gray-700 hover:bg-blue-50 hover:text-blue-700 shadow-sm transition-all duration-200 group"
+                className="fixed z-50 bottom-4 left-4 flex items-center justify-center w-10 h-10 rounded-full bg-white border border-blue-200 text-gray-700 hover:bg-blue-50 hover:text-blue-700 shadow-sm transition-all duration-200 group"
                 aria-label="Admin Dashboard"
             >
                 <UserStarIcon

@@ -7,6 +7,7 @@ import { User } from "lucide-react";
 import { NotfyContext } from "../context/Notfy";
 import React from "react";
 import ProductAddedNotification from "../component/Notif";
+import { CartContext } from "../context/CartContext";
 
 function Home() {
     const [products, setProducts] = useState([]);
@@ -14,6 +15,7 @@ function Home() {
     const { isLoaded } = useUser();
     const { user } = useUser();
     const { showNotification } = useContext(NotfyContext)
+    const { fetchCart } = useContext(CartContext);
 
     useEffect(() => {
         axios.get('https://rahmadarifin.my.id/api/produk/list.php')
@@ -37,10 +39,9 @@ function Home() {
                 formData
             );  
 
-            if (res.data.success) {
+            if (res.data.status === "success") {
                 showNotification("Produk berhasil ditambahkan ke keranjang!", "success");
-            } else {
-                showNotification("Gagal menambahkan produk ke keranjang.", "error");
+                fetchCart();  // Refresh cart count
             }
 
         } catch (err) {
@@ -116,7 +117,7 @@ function Home() {
 
             {/* Promo Banner */}
 
-            
+            <ProductAddedNotification />
         </div>
     );
 }

@@ -3,6 +3,7 @@ import Footer from "../component/Footer";
 import { Outlet } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import AdminPageBtn from "../component/AdminPageBtn";
+import LoginPromptNotification from "../component/LoginPromtpNotif";
 
 const MainLayout = () => {
     const { user } = useUser();
@@ -19,6 +20,7 @@ const MainLayout = () => {
     return (
         <>
             {user?.publicMetadata?.role === 'admin' && <AdminPageBtn />}
+            { !user && <LoginPromptNotification />}
             <Navbar />
             <Outlet />
             <Footer />
