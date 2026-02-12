@@ -4,12 +4,14 @@ import { Trash } from 'lucide-react';
 import { useState, useContext } from 'react';
 import axios from 'axios';
 import { NotfyContext } from '../context/Notfy';
+import { CartContext } from '../context/CartContext';
 
 const LogoutAlert = ({ isOpen, onSuccess, onCancel, productId }) => {
     if (!isOpen) return null;
 
     const [loading, setLoading] = useState(false);
     const { showNotification } = useContext(NotfyContext);
+    const { fetchCart } = useContext(CartContext);
 
     const handleDelete = async () => {
         setLoading(true);
@@ -21,6 +23,7 @@ const LogoutAlert = ({ isOpen, onSuccess, onCancel, productId }) => {
             await axios.post('https://rahmadarifin.my.id/api/produk/delete.php', 
                 fd);
 
+                fetchCart();
                 showNotification("Produk berhasil dihapus", "success");
                 onSuccess?.();
                 onCancel();

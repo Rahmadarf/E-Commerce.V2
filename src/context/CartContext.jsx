@@ -9,9 +9,6 @@ export const CartProvider = ({ children }) => {
     const [cartCount, setCartCount] = useState(0);
     const { user, isLoaded } = useUser();
 
-    console.log("USER:", user);
-    console.log("ID:", user?.id);
-
 
     const fetchCart = async () => {
         if (!user) return;       // kalau belum login jangan fetch

@@ -201,24 +201,67 @@ const ProductsPage = () => {
                         {sortedProducts.length > 0 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
                                 {sortedProducts.map((produk) => (
-                                    <div key={produk.id} className="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden hover:shadow-md transition-shadow">
+                                    <div
+                                        key={produk.id}
+                                        className="bg-white rounded-xl shadow-sm border border-blue-100 overflow-hidden hover:shadow-md transition-shadow duration-300"
+                                    >
+                                        {/* Image Container */}
                                         <div className="aspect-square bg-blue-50 flex items-center justify-center p-4">
-                                            <img src={`https://rahmadarifin.my.id/uploads/image/${produk.product_image}`} alt={produk.product_name} />
+                                            <img
+                                                src={
+                                                    produk.product_image
+                                                        ? `https://rahmadarifin.my.id/uploads/image/${produk.product_image.trim()}`
+                                                        : 'https://rahmadarifin.my.id/uploads/image/NoImage.png'
+                                                }
+                                                alt={produk.product_name}
+                                                className="w-full h-full object-contain"
+                                            />
                                         </div>
 
+                                        {/* Product Info */}
                                         <div className="p-4">
-                                            <h3 className="font-semibold text-gray-900 mb-1">{produk.product_name}</h3>
-                                            <p className="text-gray-600 text-sm mb-2">{produk.desk}</p>
+                                            {/* Product Name */}
+                                            <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 min-h-[40px]">
+                                                {produk.product_name}
+                                            </h3>
+
+                                            {/* Price & Button */}
                                             <div className="flex justify-between items-center">
-                                                <span className="text-lg font-bold text-blue-700">{new Intl.NumberFormat('id-ID', {
-                                                    style: 'currency',
-                                                    currency: 'IDR',
-                                                    minimumFractionDigits: 2
-                                                }).format(produk.price - (produk.price * (produk.discount / 100)))}</span>
-                                                <button className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 max-w-35 rounded text-sm transition-colors">
-                                                    Tambah ke Keranjang
+                                                <span className="text-lg font-bold text-blue-700">
+                                                    {new Intl.NumberFormat('id-ID', {
+                                                        style: 'currency',
+                                                        currency: 'IDR',
+                                                        minimumFractionDigits: 0 // Removed decimals for cleaner look
+                                                    }).format(produk.price - (produk.price * (produk.discount / 100)))}
+                                                </span>
+
+                                                <button
+                                                    onClick={() => addToCart(produk.id)}
+                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap"
+                                                >
+                                                    Add to Cart
                                                 </button>
                                             </div>
+
+                                            {/* Discount Badge (if applicable) */}
+                                            <div className='flex gap-x-2'>
+                                                {produk.discount > 0 && (
+                                                    <div className="mt-2">
+                                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                                                            Diskon {produk.discount}%
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                <div className="mt-2">
+                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                        {produk.categorie
+                                                            ?.toLowerCase()
+                                                            .replace(/\b\w/g, c => c.toUpperCase())
+                                                        }
+                                                    </span>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 ))}

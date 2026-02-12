@@ -1,10 +1,13 @@
 // CartPage.js
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Navbar from '../component/Navbar';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 import LoginRequiredNotification from '../component/Notify';
+import { CartContext } from '../context/CartContext';
+import { NotfyContext } from '../context/Notfy';
+import ProductAddedNotification from '../component/Notif';
 
 
 const Cart = () => {
@@ -12,35 +15,127 @@ const Cart = () => {
 
     const [cart, setCart] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [qtyLoading, setQtyLoading] = useState(null)
     const { user, isLoaded } = useUser();
+    const { fetchCart } = useContext(CartContext);
+    const { showNotification } = useContext(NotfyContext);
+
+    {/* Ambil data cart sesuai user */ }
+    const fetchCartData = async () => {
+        if (!isLoaded || !user) return;
+
+        try {
+            const res = await axios.get(
+                `https://rahmadarifin.my.id/api/cart/list.php?clerk_id=${user.id}`
+            );
+
+            setCart(res.data);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        if (!isLoaded || !user) {
-            return;
-        }
-
-        const clerkId = user?.id
-
-
-        axios.get(`https://rahmadarifin.my.id/api/cart/list.php?clerk_id=${clerkId}`)
-            .then(res => {
-                setCart(res.data);
-            })
-            .finally(() => setLoading(false))
-            .catch(() => setLoading(false));
+        fetchCartData();
     }, [isLoaded, user]);
 
-    if (loading || !user) {
+
+
+    {/* Mengurangi jumlah item di cart */ }
+    const decreaseQty = async (productId) => {
+        if (!user) return;
+
+        setQtyLoading(productId); // mulai loading
+
+        const fd = new FormData();
+        fd.append('product_id', productId);
+        fd.append('clerk_id', user.id);
+
+        try {
+            await axios.post(
+                `https://rahmadarifin.my.id/api/cart/decrement.php`,
+                fd
+            );
+
+            await fetchCartData(); // pisahin function fetch biar rapi
+            fetchCart(); // update navbar
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setQtyLoading(null); // selesai loading
+        }
+    };
+
+
+
+    {/* Menambah jumlah item di cart */ }
+    const increaseQty = async (productId) => {
+        if (!user) return;
+
+        const fd = new FormData();
+        fd.append('clerk_id', user.id),
+            fd.append('product_id', productId)
+
+        try {
+            await axios.post(
+                'https://rahmadarifin.my.id/api/cart/increment.php',
+                fd
+            );
+            //refresh data cart
+            await fetchCartData()
+            fetchCart()
+        } catch (err) {
+            console.log("Error Increment", err)
+        }
+    }
+
+
+
+    {/* Hapus item dari cart */}
+    const deleteItem = async (productId) => {
+        if (!user) return;
+
+        const fd = new FormData();
+        fd.append('clerk_id', user.id),
+        fd.append('product_id', productId)
+
+        try {
+            await axios.post(
+                'https://rahmadarifin.my.id/api/cart/deleteCart.php',
+                fd
+            );
+            await fetchCartData();
+            fetchCart()
+        } catch (error) {
+            console.log("Error while delete item", error)
+        } finally {
+            showNotification('Berhasil menghapus item', 'success')
+        }
+    }
+
+
+    if (loading) {
         return (
             <LoginRequiredNotification />
-            
         )
     }
 
-    if (!isLoaded || !user) {
+    if (!user) {
         return (
             <LoginRequiredNotification />
         );
+    }
+
+    if (!isLoaded) {
+        return (
+            <div className="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-6"></div>
+                <h2 className="text-xl font-medium">Tunggu Sebentar...</h2>
+                <p className="text-gray-600">Memuat Keranjang Anda</p>
+            </div>
+        )
     }
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
@@ -81,11 +176,13 @@ const Cart = () => {
 
                                                 {/* Quantity Controls */}
                                                 <div className="flex items-center mt-3">
-                                                    <button className="w-8 h-8 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center hover:bg-blue-200">
-                                                        -
+                                                    <button
+                                                        disabled={qtyLoading === item.product_id}
+                                                        onClick={() => decreaseQty(item.product_id)} className="w-8 h-8 disable:animate-spin rounded-full bg-blue-100 text-blue-800 flex items-center justify-center hover:bg-blue-200 disabled:">
+                                                        {qtyLoading === item.product_id ? '...' : '-'}
                                                     </button>
                                                     <span className="mx-3 w-10 text-center">{item.qty}</span>
-                                                    <button className="w-8 h-8 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center hover:bg-blue-200">
+                                                    <button onClick={() => increaseQty(item.product_id)} className="w-8 h-8 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center hover:bg-blue-200">
                                                         +
                                                     </button>
                                                 </div>
@@ -93,7 +190,7 @@ const Cart = () => {
 
                                             {/* Remove Button */}
                                             <div className="flex items-start sm:items-end">
-                                                <button className="text-gray-500 hover:text-red-500 p-1">
+                                                <button onClick={() => deleteItem(item.product_id)} className="text-gray-500 hover:text-red-500 p-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                     </svg>
@@ -174,6 +271,7 @@ const Cart = () => {
                     </div>
                 )}
             </div>
+            <ProductAddedNotification />
         </div>
     );
 };
