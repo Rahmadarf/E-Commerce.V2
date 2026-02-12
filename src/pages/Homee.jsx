@@ -124,7 +124,7 @@ function Home() {
 
                                         <button
                                             onClick={() => addToCart(produk.id)}
-                                            disabled={produk.stock > 1 }
+                                            disabled={produk.stock === 1 }
                                             className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap ${produk.stock > 1
                                                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'

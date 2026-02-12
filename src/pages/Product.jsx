@@ -1,9 +1,12 @@
 // ProductsPage.js
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Navbar from '../component/Navbar';
 import Footer from '../component/Footer';
 import axios from 'axios';
 import { useUser } from '@clerk/clerk-react';
+import { CartContext } from '../context/CartContext';
+import { NotfyContext } from '../context/Notfy';
+import ProductAddedNotification from '../component/Notif';
 
 const ProductsPage = () => {
     // Filter states
@@ -14,6 +17,8 @@ const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const { isLoaded, user } = useUser();
+    const { fetchCart } = useContext(CartContext)
+    const { showNotification } = useContext(NotfyContext)
 
     // Mock data (replace with API call)
     const categories = [
@@ -34,6 +39,30 @@ const ProductsPage = () => {
             })
             .catch(() => setLoading(false));
     }, [isLoaded, user]);
+
+
+    const addToCart = async (productId) => {
+
+        try {
+            const formData = new FormData();
+            formData.append("clerk_id", user.id);
+            formData.append("product_id", productId);
+
+            const res = await axios.post(
+                "https://rahmadarifin.my.id/api/cart/addToCart.php",
+                formData
+            );
+
+            if (res.data.status === "success") {
+                showNotification("Produk berhasil ditambahkan ke keranjang!", "success");
+                fetchCart();  // Refresh cart count
+            }
+
+        } catch (err) {
+            console.error(err);
+            showNotification("Terjadi kesalahan!", "error");
+        }
+    };
 
     if (loading) {
         return (
@@ -237,9 +266,13 @@ const ProductsPage = () => {
 
                                                 <button
                                                     onClick={() => addToCart(produk.id)}
-                                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap"
+                                                    disabled={produk.stock === 1}
+                                                    className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap ${produk.stock > 1
+                                                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                                                        : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                                        }`}
                                                 >
-                                                    Add to Cart
+                                                    {produk.stock > 1 ? 'Add to cart' : 'Barang habis'}
                                                 </button>
                                             </div>
 
@@ -288,7 +321,7 @@ const ProductsPage = () => {
                     </div>
                 </div>
             </div>
-
+            <ProductAddedNotification />
         </div>
     );
 };
