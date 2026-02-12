@@ -1,5 +1,6 @@
 // AboutPage.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const About = () => {
     return (
@@ -141,12 +142,12 @@ const About = () => {
                         Bergabunglah dengan ribuan pelanggan yang puas dan temukan produk-produk luar biasa hari ini.
                     </p>
                     <div className="flex flex-col sm:flex-row justify-center gap-4">
-                        <a
-                            href="/products"
+                        <Link
+                            to='/products'
                             className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-3 rounded-lg font-bold text-lg transition-colors"
                         >
                             Lihat Produk
-                        </a>
+                        </Link>
                         <a
                             href="/contact"
                             className="border border-white text-white hover:bg-white hover:text-blue-700 px-8 py-3 rounded-lg font-bold text-lg transition-colors"
