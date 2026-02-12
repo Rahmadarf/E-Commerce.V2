@@ -171,10 +171,12 @@ const EditProduct = ({ isOpen, onClose, productId, onSuccess }) => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border border-blue-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 appearance-none bg-white"
                         >
-                            <option value="">Pilih kategori</option>
+                            <option value="" disabled>Pilih kategori</option>
                             <option value="clothing">Clothing</option>
                             <option value="accessories">Accessories</option>
                             <option value="electronics">Electronics</option>
+                            <option value="home">Rumah & Dapur</option>
+                            <option value="beauty">Kecantikan</option>
                         </select>
                     </div>
 

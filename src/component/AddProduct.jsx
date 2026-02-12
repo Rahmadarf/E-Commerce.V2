@@ -153,10 +153,12 @@ const AddProductModal = ({ onCancel, isOpen, onAdd }) => {
                             onChange={e => setForm({ ...form, kategori: e.target.value })}
                             value={form.kategori}
                         >
-                            <option value="">Pilih Kategori</option>
+                            <option value="" disabled>Pilih Kategori</option>
                             <option value={'clothing'}>Clothing</option>
                             <option value={'accessories'}>Accessories</option>
                             <option value={'electronics'}>Electronics</option>
+                            <option value={'home'}>Rumah & Dapur</option>
+                            <option value={'beauty'}>Kecantikan</option>
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
