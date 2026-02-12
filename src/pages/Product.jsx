@@ -192,7 +192,7 @@ const ProductsPage = () => {
                             {/* Reset Button */}
                             <button
                                 onClick={() => {
-                                    setPriceRange([0, 100000]);
+                                    setPriceRange([0, 1000000]);
                                     setSelectedCategory('all');
                                     setInStockOnly(false);
                                     setSortBy('featured');
@@ -272,7 +272,7 @@ const ProductsPage = () => {
                                                         : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                                         }`}
                                                 >
-                                                    {produk.stock > 1 ? 'Add to cart' : 'Barang habis'}
+                                                    {produk.stock > 1 ? '+ Keranjang' : 'Barang habis'}
                                                 </button>
                                             </div>
 

@@ -130,7 +130,7 @@ function Home() {
                                                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                                                 }`}
                                         >
-                                            {produk.stock > 1 ? 'Add to cart' : 'Barang habis'}
+                                            {produk.stock > 1 ? '+ Keranjang' : 'Barang habis'}
                                         </button>
                                     </div>
 
