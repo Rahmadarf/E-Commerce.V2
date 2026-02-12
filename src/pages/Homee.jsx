@@ -66,10 +66,10 @@ function Home() {
                         </p>
                         <div className="flex flex-col sm:flex-row justify-center gap-4">
                             <Link to="/products" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition-colors">
-                                Shop Now
+                                Belanja sekarang
                             </Link>
-                            <Link to="/deals" className="border border-blue-600 text-blue-700 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium transition-colors">
-                                View Deals
+                            <Link to="/about" className="border border-blue-600 text-blue-700 hover:bg-blue-50 px-8 py-3 rounded-lg font-medium transition-colors">
+                                Tentang kami
                             </Link>
                         </div>
                     </div>
@@ -80,9 +80,9 @@ function Home() {
             <section className="py-12 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center mb-8">
-                        <h2 className="text-2xl font-bold text-gray-900">Featured Products</h2>
+                        <h2 className="text-2xl font-bold text-gray-900">Produk Unggulan</h2>
                         <Link to="/products" className="text-blue-700 hover:text-blue-900 font-medium">
-                            View All →
+                            Lihat Semua →
                         </Link>
                     </div>
 
@@ -158,7 +158,7 @@ function Home() {
                         ))}
                     </div>}
 
-                    {!products.length && <p className="text-center text-gray-600">No products available.</p>}
+                    {!products.length && <p className="text-center text-gray-600">Tidak ada produk yang tersedia.</p>}
                 </div>
             </section>
 

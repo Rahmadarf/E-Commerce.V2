@@ -28,11 +28,11 @@ const LoginRequiredNotification = () => {
                     </div>
 
                     <h2 className="text-xl font-bold text-gray-900 mb-2">
-                        Authentication Required
+                        Membutuhkan Autentikasi
                     </h2>
 
                     <p className="text-gray-600 mb-6">
-                        You need to log in to access this page
+                        Kamu perlu log in untuk mengakses halaman ini.
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -40,20 +40,20 @@ const LoginRequiredNotification = () => {
                             to="/login"
                             className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
                         >
-                            Sign In
+                            Log in
                         </Link>
                         <Link
                             to="/signup"
                             className="px-5 py-2.5 bg-white border border-blue-200 text-blue-700 hover:bg-blue-50 rounded-lg font-medium transition-colors"
                         >
-                            Create Account
+                            Buat akun
                         </Link>
                     </div>
                 </div>
 
                 <div className="bg-blue-50 px-6 py-3 text-center">
                     <p className="text-xs text-blue-800">
-                        Secure authentication • Your data is protected
+                        Autentikasi aman • Data Anda terlindungi
                     </p>
                 </div>
             </div>

@@ -9,7 +9,7 @@ const ProductAddedNotification = () => {
     if (!notification) return null;
 
     return (
-        <div className="fixed top-4 left-4 z-50 max-w-60 w-full">
+        <div className="fixed md:top-4 md:left-4 sm:bottom-4 sm:right-4 z-100 max-w-60 w-full">
             <div className="bg-white rounded-lg shadow-lg border border-blue-100 overflow-hidden animate-fade-in-up">
                 <div className="flex items-start p-4">
                     {/* Icon */}

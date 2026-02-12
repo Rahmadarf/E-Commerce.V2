@@ -169,10 +169,6 @@ const ProductsPage = () => {
                                         onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
                                         className="w-full accent-blue-600"
                                     />
-                                    <div className="flex justify-between text-sm text-gray-600">
-                                        <span>Rp. 0</span>
-                                        <span>Rp. 100.000</span>
-                                    </div>
                                 </div>
                             </div>
 
@@ -199,7 +195,7 @@ const ProductsPage = () => {
                                 }}
                                 className="w-full py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg font-medium transition-colors"
                             >
-                                Reset Filters
+                                Reset Filter
                             </button>
                         </div>
                     </div>
@@ -314,7 +310,7 @@ const ProductsPage = () => {
                                     }}
                                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
                                 >
-                                    Reset Filters
+                                    Reset Filter
                                 </button>
                             </div>
                         )}

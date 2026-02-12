@@ -1,12 +1,15 @@
 // AccountSettings.js
 import { useUser, useClerk } from '@clerk/clerk-react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoginRequiredNotification from '../component/Notify';
 import LogoutAlert from '../component/LogOutAlert';
+import { NotfyContext } from '../context/Notfy';
+import ProductAddedNotification from '../component/Notif';
 
 const Account = () => {
     const { user, isLoaded } = useUser();
+    const { showNotification } = useContext(NotfyContext)
     const signOut = useClerk();
     const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
@@ -133,7 +136,7 @@ const Account = () => {
                     <div className="lg:col-span-2 space-y-6">
                         {/* Profile Settings */}
                         <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Profile Information</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Informasi Profil</h2>
 
                             {message.text && (
                                 <div className={`mb-4 p-3 rounded-lg ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
@@ -147,7 +150,7 @@ const Account = () => {
                                     <div className="space-y-4">
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                First Name
+                                                Nama Awal
                                             </label>
                                             <input
                                                 type="text"
@@ -160,7 +163,7 @@ const Account = () => {
 
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Last Name
+                                                Nama Akhir
                                             </label>
                                             <input
                                                 type="text"
@@ -173,7 +176,7 @@ const Account = () => {
 
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Email Address
+                                                alamat Email
                                             </label>
                                             <input
                                                 type="email"
@@ -183,7 +186,7 @@ const Account = () => {
                                                 required
                                             />
                                             <p className="text-xs text-gray-500 mt-1">
-                                                Changing your email will require verification
+                                                Mengganti email akan membutuhkan verifikasi
                                             </p>
                                         </div>
 
@@ -192,14 +195,14 @@ const Account = () => {
                                                 type="submit"
                                                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
                                             >
-                                                Save Changes
+                                                Simpan Perubahan
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => setIsEditing(false)}
                                                 className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-lg font-medium transition-colors"
                                             >
-                                                Cancel
+                                                Batal
                                             </button>
                                         </div>
                                     </div>
@@ -207,15 +210,15 @@ const Account = () => {
                             ) : (
                                 <div className="space-y-3">
                                     <div>
-                                        <span className="text-sm text-gray-500">First Name</span>
+                                        <span className="text-sm text-gray-500">Nama Awal</span>
                                         <p className="font-medium">{user?.firstName || '-'}</p>
                                     </div>
                                     <div>
-                                        <span className="text-sm text-gray-500">Last Name</span>
+                                        <span className="text-sm text-gray-500">Nama Akhir</span>
                                         <p className="font-medium">{user?.lastName || '-'}</p>
                                     </div>
                                     <div>
-                                        <span className="text-sm text-gray-500">Email Address</span>
+                                        <span className="text-sm text-gray-500">Alamat Email</span>
                                         <p className="font-medium">{user?.emailAddresses[0]?.emailAddress || '-'}</p>
                                     </div>
                                 </div>
@@ -224,12 +227,12 @@ const Account = () => {
 
                         {/* Password Settings */}
                         <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Change Password</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Ganti Password</h2>
 
                             <form onSubmit={handlePasswordChange} className="space-y-4">
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Current Password
+                                        Password Sekarang
                                     </label>
                                     <input
                                         type="password"
@@ -242,7 +245,7 @@ const Account = () => {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        New Password
+                                        Password Baru
                                     </label>
                                     <input
                                         type="password"
@@ -255,7 +258,7 @@ const Account = () => {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Confirm New Password
+                                        Konfirmasi Password Baru
                                     </label>
                                     <input
                                         type="password"
@@ -270,16 +273,16 @@ const Account = () => {
                                     type="submit"
                                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
                                 >
-                                    Update Password
+                                    Perbarui Password
                                 </button>
                             </form>
                         </div>
 
                         {/* Danger Zone */}
                         <div className="bg-white rounded-xl shadow-sm border border-red-200 p-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">Danger Zone</h2>
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Zona Bahaya</h2>
                             <p className="text-gray-600 mb-4">
-                                Log out of your account on this device.
+                                Log out akun kamu dari perangkat ini.
                             </p>
                             <button onClick={() => setShowLogoutAlert(true)} className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors">
                                 Log Out
@@ -290,6 +293,7 @@ const Account = () => {
             </div>
 
             <LogoutAlert isOpen={showLogoutAlert} onConfirm={() => handleLogout()} onCancel={() => setShowLogoutAlert(false)} />
+            {showNotification && <ProductAddedNotification />}
 
         </div>
     );
