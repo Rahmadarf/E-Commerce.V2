@@ -39,7 +39,7 @@ const Navbar = () => {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        {['Home', 'Products', 'Categories', 'Deals', 'About'].map((item) => {
+                        {['Home', 'Products', 'Categories', 'About'].map((item) => {
 
                             const routes = {
                                 Home: '/',
