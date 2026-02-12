@@ -41,12 +41,18 @@ const Navbar = () => {
                     <nav className="hidden md:flex space-x-8">
                         {['Home', 'Products', 'Categories', 'Deals', 'About'].map((item) => {
 
-                            const isAllowed = item === 'Home' || item === 'Products';
+                            const routes = {
+                                Home: '/',
+                                Products: '/products',
+                                About: '/about'
+                            }
+
+                            const isAllowed = routes[item];
 
                             return (
                                 <Link
                                     key={item}
-                                    to={isAllowed ? (item === 'Home' ? '/' : '/products') : '#'}
+                                    to={isAllowed ? routes[item] : '#'}
                                     onClick={(e) => {
                                         if (!isAllowed) {
                                             e.preventDefault(); // stop navigation
