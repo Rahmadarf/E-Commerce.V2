@@ -21,6 +21,7 @@ import AdminLayout from './layout/AdminLayout.jsx'
 import AdminProductsList from './pages/admin/ProductList.jsx'
 import VerifyLogin from './pages/VerifyLogin.jsx'
 import LoggedGuard from './protect/LoggedGuard.jsx'
+import About from './pages/About.jsx'
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
       >
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<Product />} />
+        <Route path="/about" element={<About />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/account" element={<Account />} />
       </Route>
