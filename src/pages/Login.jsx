@@ -27,7 +27,7 @@ const LoginPage = () => {
                 strategy: 'email_code'
             });
 
-            navigate('/');
+            navigate('/verify-login');
         } catch (err) {
             console.error(err);
             setError(err.errors?.[0]?.message || 'Login gagal');
