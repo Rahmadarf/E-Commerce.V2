@@ -10,7 +10,7 @@ const LoginPromptNotification = () => {
     };
 
     return (
-        <div className="fixed bottom-4 right-4 z-50">
+        <div className="fixed bottom-4 left-4 z-50">
             <div className="bg-white rounded-lg shadow-lg border border-blue-100 px-4 py-3 flex items-center space-x-3 animate-fade-in">
                 <span className="text-gray-700 text-sm">
                     Belum log in ke EzShop?

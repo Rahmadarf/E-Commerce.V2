@@ -7,6 +7,7 @@ import { useUser } from '@clerk/clerk-react';
 import { CartContext } from '../context/CartContext';
 import { NotfyContext } from '../context/Notfy';
 import ProductAddedNotification from '../component/Notif';
+import LoginRequiredCartNotify from '../component/LoginRequiredCartNotify';
 
 const ProductsPage = () => {
     // Filter states
@@ -19,6 +20,7 @@ const ProductsPage = () => {
     const { isLoaded, user } = useUser();
     const { fetchCart } = useContext(CartContext)
     const { showNotification } = useContext(NotfyContext)
+    const [ show, setShow] = useState(false)
 
     // Mock data (replace with API call)
     const categories = [
@@ -42,10 +44,18 @@ const ProductsPage = () => {
 
 
     const addToCart = async (productId) => {
+        if (!isLoaded) return;
+
+        if (!user) {
+            setShow(true)
+            return;
+        }
+
+        const clerkId = user.id
 
         try {
             const formData = new FormData();
-            formData.append("clerk_id", user.id);
+            formData.append("clerk_id", clerkId);
             formData.append("product_id", productId);
 
             const res = await axios.post(
@@ -261,8 +271,8 @@ const ProductsPage = () => {
                                                 </span>
 
                                                 <button
-                                                    onClick={() => addToCart(produk.id)}
-                                                    disabled={produk.stock === 1}
+                                                    onClick={() => {user ? addToCart(produk.id) : setShow(true)}}
+                                                    disabled={produk.stock <= 0 }
                                                     className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap ${produk.stock > 1
                                                         ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                                         : 'bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -318,6 +328,7 @@ const ProductsPage = () => {
                 </div>
             </div>
             <ProductAddedNotification />
+            <LoginRequiredCartNotify isVisible={show} onClose={() => setShow(false)} />
         </div>
     );
 };

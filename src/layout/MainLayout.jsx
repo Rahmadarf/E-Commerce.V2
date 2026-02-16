@@ -5,12 +5,13 @@ import { useUser } from "@clerk/clerk-react";
 import AdminPageBtn from "../component/AdminPageBtn";
 import LoginPromptNotification from "../component/LoginPromtpNotif";
 import { NotfyContext } from "../context/Notfy";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ProductAddedNotification from "../component/Notif";
 
 const MainLayout = () => {
     const { user } = useUser();
     const { showNotification } = useContext(NotfyContext)
+    const [show, setShow] = useState(false)
 
     if (!user) {
         return (
@@ -26,7 +27,7 @@ const MainLayout = () => {
     return (
         <>
             {user?.publicMetadata?.role === 'admin' && <AdminPageBtn />}
-            <ProductAddedNotification />
+            <ProductAddedNotification isVisible={show}/>
             <Navbar />
             <Outlet />
             <Footer />

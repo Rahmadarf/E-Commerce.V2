@@ -132,7 +132,7 @@ function Home() {
                                         </span>
 
                                         <button
-                                            onClick={() => addToCart(produk.id)}
+                                            onClick={() => {user ? addToCart(produk.id) : setShow(true)}}
                                             disabled={produk.stock <= 0 }
                                             className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap ${produk.stock > 1
                                                     ? 'bg-blue-600 hover:bg-blue-700 text-white'

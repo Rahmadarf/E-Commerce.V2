@@ -71,10 +71,10 @@ const LoginRequiredCartNotify = ({ isVisible, onClose }) => {
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                         <h3 className="text-lg font-bold text-gray-900 mb-1">
-                            Login Required
+                            Diperlukan Login
                         </h3>
                         <p className="text-gray-700 mb-4">
-                            Please log in to add items to your shopping cart and complete your purchase.
+                            Silakan login untuk menambahkan barang ke keranjang belanja Anda dan menyelesaikan pembelian.
                         </p>
 
                         <div className="flex space-x-3">
@@ -82,13 +82,13 @@ const LoginRequiredCartNotify = ({ isVisible, onClose }) => {
                                 onClick={handleLoginClick}
                                 className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                             >
-                                Go to Login
+                                Pergi Login
                             </button>
                             <button
                                 onClick={handleDismiss}
                                 className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors"
                             >
-                                Dismiss
+                                Abaikan
                             </button>
                         </div>
                     </div>
