@@ -8,12 +8,13 @@ import { NotfyContext } from "../context/Notfy";
 import React from "react";
 import ProductAddedNotification from "../component/Notif";
 import { CartContext } from "../context/CartContext";
+import LoginRequiredCartNotify from "../component/LoginRequiredCartNotify";
 
 function Home() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { isLoaded } = useUser();
-    const { user } = useUser();
+    const [show, setShow] = useState(false)
+    const { user, isLoaded } = useUser();
     const { showNotification } = useContext(NotfyContext)
     const { fetchCart } = useContext(CartContext);
 
@@ -28,10 +29,18 @@ function Home() {
 
 
     const addToCart = async (productId) => {
+        if (!isLoaded) return;
+
+        if (!user) {
+            setShow(true)
+            return;
+        }
+
+        const clerkId = user.id
 
         try {
             const formData = new FormData();
-            formData.append("clerk_id", user.id);
+            formData.append("clerk_id", clerkId);
             formData.append("product_id", productId);
 
             const res = await axios.post(
@@ -124,7 +133,7 @@ function Home() {
 
                                         <button
                                             onClick={() => addToCart(produk.id)}
-                                            disabled={produk.stock === 1 }
+                                            disabled={produk.stock <= 0 }
                                             className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap ${produk.stock > 1
                                                     ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'
@@ -165,6 +174,7 @@ function Home() {
             {/* Promo Banner */}
 
             <ProductAddedNotification />
+            <LoginRequiredCartNotify isVisible={show} onClose={() => setShow(false)}/>
         </div>
     );
 }
