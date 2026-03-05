@@ -146,7 +146,7 @@ const Cart = () => {
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-8">Your Shopping Cart</h1>
+                <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-8">Keranjang Belanja Anda</h1>
 
                 {cart.length > 0 ? (
                     <div className="flex flex-col lg:flex-row gap-8">
@@ -205,7 +205,7 @@ const Cart = () => {
                         {/* Order Summary */}
                         <div className="lg:w-1/3">
                             <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-6 sticky top-8">
-                                <h2 className="text-xl font-bold text-gray-900 mb-4">Order Summary</h2>
+                                <h2 className="text-xl font-bold text-gray-900 mb-4">Ringkasan Pesanan</h2>
 
                                 <div className="space-y-3 mb-6">
                                     <div className="flex justify-between">
@@ -217,7 +217,7 @@ const Cart = () => {
                                         }).format(subtotal)}</span>
                                     </div>
                                     <div className="flex justify-between">
-                                        <span className="text-gray-600">Shipping</span>
+                                        <span className="text-gray-600">Pengiriman</span>
                                         <span className="font-medium">{new Intl.NumberFormat('id-ID', {
                                             style: 'currency',
                                             currency: 'IDR',
@@ -243,16 +243,16 @@ const Cart = () => {
                                 </div>
 
                                 <button className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-lg transition-colors">
-                                    Proceed to Checkout
+                                    Proses Pembayaran
                                 </button>
 
                                 <div className="mt-4 text-center text-sm text-gray-600">
-                                    <p>Free shipping on orders over {new Intl.NumberFormat('id-ID', {
+                                    <p>Gratis ongkos kirim untuk pesanan di atas {new Intl.NumberFormat('id-ID', {
                                         style: 'currency',
                                         currency: 'IDR',
                                         minimumFractionDigits: 2
                                     }).format(shipping)}</p>
-                                    <p className="mt-1">Secure checkout • 30-day returns</p>
+                                    <p className="mt-1">Pembayaran aman • Pengembalian dalam 30 hari</p>
                                 </div>
                             </div>
                         </div>
@@ -261,12 +261,12 @@ const Cart = () => {
                     /* Empty Cart State */
                     <div className="bg-white rounded-xl shadow-sm border border-blue-100 p-12 text-center">
                         <div className="text-blue-800 text-5xl mb-4">🛒</div>
-                        <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-2">Keranjang kamu kosong</h2>
                         <p className="text-gray-600 mb-6 max-w-md mx-auto">
-                            Looks like you haven't added anything to your cart yet. Start shopping to find amazing products!
+                            Sepertinya Anda belum menambahkan apa pun ke keranjang belanja Anda. Mulailah berbelanja untuk menemukan produk-produk menarik!
                         </p>
                         <Link to="/products" className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
-                            Browse Products
+                            Belanjar Sekarang
                         </Link>
                     </div>
                 )}

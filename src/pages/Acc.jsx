@@ -125,7 +125,7 @@ const Account = () => {
                                         onClick={() => setIsEditing(!isEditing)}
                                         className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
                                     >
-                                        {isEditing ? 'Cancel' : 'Edit Profile'}
+                                        {isEditing ? 'Batal' : 'Edit Profil'}
                                     </button>
                                 </div>
                             </div>
